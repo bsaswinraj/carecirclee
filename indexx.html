@@ -1,0 +1,4252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CareCircle — Family Health</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --primary:#087f73;
+    --primary-dark:#05665d;
+    --primary-light:#e6f7f4;
+    --background:#f4f9f8;
+    --white:#ffffff;
+    --text:#183b38;
+    --muted:#7b8c89;
+    --border:#e3eeec;
+    --danger:#d94b4b;
+    --danger-light:#fff0f0;
+    --warning:#d28a19;
+    --warning-light:#fff7e8;
+    --success:#26936f;
+    --success-light:#eaf8f2;
+    --shadow:0 10px 35px rgba(20,75,70,.08);
+}
+
+body{
+    background:var(--background);
+    color:var(--text);
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(8,127,115,.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(58,156,196,.14),
+            transparent 30%
+        ),
+        #f4f9f8;
+}
+
+.login-box{
+    width:1000px;
+    max-width:94%;
+    min-height:600px;
+
+    background:white;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    box-shadow:
+        0 25px 70px rgba(20,75,70,.15);
+}
+
+.login-brand{
+    background:
+        linear-gradient(
+            145deg,
+            #086d64,
+            #12a394
+        );
+
+    color:white;
+
+    padding:60px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.brand-icon{
+    font-size:70px;
+    margin-bottom:25px;
+}
+
+.brand-logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
+    margin-bottom:35px;
+}
+
+.login-brand h1{
+    font-size:45px;
+    line-height:1.08;
+    margin-bottom:20px;
+}
+
+.login-brand p{
+    font-size:16px;
+    line-height:1.8;
+    opacity:.9;
+    max-width:400px;
+}
+
+.login-form{
+    padding:60px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.login-form h2{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.login-description{
+    color:var(--muted);
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+
+    padding:13px 14px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:#fbfefe;
+
+    outline:none;
+
+    font-size:14px;
+
+    color:var(--text);
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--primary);
+}
+
+.login-button{
+    width:100%;
+
+    border:0;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:14px;
+
+    border-radius:11px;
+
+    font-weight:700;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    margin-top:5px;
+
+    transition:.2s;
+}
+
+.login-button:hover{
+    background:var(--primary-dark);
+    transform:translateY(-1px);
+}
+
+.demo{
+    text-align:center;
+    color:#9aa9a6;
+    font-size:12px;
+    margin-top:15px;
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard{
+    display:none;
+    min-height:100vh;
+}
+
+.navbar{
+    height:72px;
+
+    background:white;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 35px;
+
+    position:sticky;
+    top:0;
+
+    z-index:50;
+}
+
+.nav-logo{
+    color:var(--primary);
+
+    font-size:24px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.nav-right{
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.user-pill{
+    background:var(--primary-light);
+
+    color:var(--primary);
+
+    padding:8px 13px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+.logout{
+    border:0;
+
+    background:#f0f5f4;
+
+    color:#58706c;
+
+    padding:9px 14px;
+
+    border-radius:9px;
+
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+.logout:hover{
+    background:#e4eeec;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.content{
+    max-width:1500px;
+
+    margin:auto;
+
+    padding:30px;
+}
+
+.page-heading{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.page-heading h1{
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.page-heading p{
+    color:var(--muted);
+}
+
+.date-display{
+    background:white;
+
+    border:1px solid var(--border);
+
+    padding:12px 17px;
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    color:var(--muted);
+}
+
+
+/* =====================================================
+   STAT CARDS
+===================================================== */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:24px;
+}
+
+.stat{
+    background:white;
+
+    border:1px solid var(--border);
+
+    border-radius:17px;
+
+    padding:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:50px;
+    height:50px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:var(--primary-light);
+
+    font-size:22px;
+}
+
+.stat h3{
+    font-size:25px;
+}
+
+.stat p{
+    font-size:12px;
+
+    color:var(--muted);
+
+    margin-top:2px;
+}
+
+
+/* =====================================================
+   ALERT BANNER
+===================================================== */
+
+.alert{
+    display:none;
+
+    background:var(--danger-light);
+
+    border:1px solid #ffd4d4;
+
+    color:#9d3030;
+
+    border-radius:14px;
+
+    padding:15px 18px;
+
+    margin-bottom:22px;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.alert strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+.alert button{
+    border:0;
+
+    background:white;
+
+    color:#a33333;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    font-weight:700;
+}
+
+
+/* =====================================================
+   DASHBOARD GRID
+===================================================== */
+
+.dashboard-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.6fr 1fr;
+
+    gap:22px;
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card{
+    background:white;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+}
+
+.card-header{
+    padding:19px 22px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.card-header h2{
+    font-size:18px;
+}
+
+.card-header span{
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.card-body{
+    padding:22px;
+}
+
+
+/* =====================================================
+   NEXT VISIT
+===================================================== */
+
+.next-visit{
+    background:
+        linear-gradient(
+            135deg,
+            #eaf8f5,
+            #f7fcfb
+        );
+
+    border:1px solid #d6eeea;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+}
+
+.next-label{
+    color:var(--primary);
+
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+}
+
+.next-main{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.next-person{
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+}
+
+.next-avatar{
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:800;
+
+    font-size:18px;
+}
+
+.next-person h3{
+    font-size:17px;
+}
+
+.next-person p{
+    font-size:12px;
+
+    color:var(--muted);
+
+    margin-top:3px;
+}
+
+.countdown{
+    font-size:19px;
+
+    color:var(--primary);
+
+    font-weight:900;
+
+    text-align:right;
+}
+
+.countdown small{
+    display:block;
+
+    font-size:10px;
+
+    color:var(--muted);
+
+    font-weight:600;
+
+    margin-top:3px;
+}
+
+
+/* =====================================================
+   APPOINTMENT LIST
+===================================================== */
+
+.appointments{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.appointment{
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    padding:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    transition:.2s;
+}
+
+.appointment:hover{
+    border-color:#b9dcd7;
+
+    transform:translateY(-1px);
+}
+
+.appointment-date{
+    width:48px;
+
+    height:52px;
+
+    border-radius:10px;
+
+    background:var(--primary-light);
+
+    color:var(--primary);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+}
+
+.appointment-date strong{
+    font-size:17px;
+}
+
+.appointment-date small{
+    font-size:9px;
+    font-weight:800;
+}
+
+.appointment-info{
+    flex:1;
+}
+
+.appointment-info h4{
+    font-size:14px;
+    margin-bottom:3px;
+}
+
+.appointment-info p{
+    font-size:11px;
+    color:var(--muted);
+}
+
+.status{
+    padding:5px 8px;
+
+    border-radius:7px;
+
+    font-size:10px;
+
+    font-weight:800;
+}
+
+.status.upcoming{
+    background:var(--success-light);
+    color:var(--success);
+}
+
+.status.today{
+    background:var(--warning-light);
+    color:var(--warning);
+}
+
+.status.overdue{
+    background:var(--danger-light);
+    color:var(--danger);
+}
+
+
+/* =====================================================
+   FAMILY TREE
+===================================================== */
+
+.tree-area{
+    overflow:auto;
+
+    min-height:450px;
+
+    padding:35px;
+}
+
+.tree{
+    min-width:700px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+}
+
+.tree-node{
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    position:relative;
+}
+
+.member-card{
+    width:160px;
+
+    min-height:140px;
+
+    background:white;
+
+    border:2px solid #dcece9;
+
+    border-radius:15px;
+
+    padding:14px;
+
+    text-align:center;
+
+    box-shadow:0 7px 20px rgba(20,75,70,.06);
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.member-card:hover{
+    border-color:var(--primary);
+
+    transform:translateY(-3px);
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    margin:auto;
+
+    margin-bottom:8px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:var(--primary-light);
+
+    color:var(--primary);
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.member-card h4{
+    font-size:14px;
+
+    margin-bottom:4px;
+}
+
+.member-card p{
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-bottom:10px;
+}
+
+.member-actions{
+    display:flex;
+
+    justify-content:center;
+
+    gap:5px;
+}
+
+.member-actions button{
+    border:0;
+
+    background:#eff8f6;
+
+    color:var(--primary);
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+.add-child{
+    position:absolute;
+
+    right:-11px;
+
+    bottom:-11px;
+
+    width:28px;
+    height:28px;
+
+    border-radius:50%;
+
+    border:3px solid white;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:17px;
+
+    z-index:5;
+}
+
+.children{
+    display:flex;
+
+    gap:30px;
+
+    padding-top:35px;
+
+    position:relative;
+}
+
+.children::before{
+    content:"";
+
+    position:absolute;
+
+    top:10px;
+
+    left:10%;
+
+    right:10%;
+
+    height:2px;
+
+    background:#c4dfdb;
+}
+
+
+/* =====================================================
+   HEALTH PROFILE
+===================================================== */
+
+.profile{
+    display:none;
+}
+
+.profile-top{
+    text-align:center;
+
+    padding-bottom:18px;
+
+    border-bottom:1px solid var(--border);
+
+    margin-bottom:12px;
+}
+
+.profile-avatar{
+    width:65px;
+    height:65px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--primary-light);
+
+    color:var(--primary);
+
+    font-size:25px;
+
+    font-weight:900;
+
+    margin-bottom:10px;
+}
+
+.profile-top h3{
+    font-size:20px;
+}
+
+.profile-top p{
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-top:4px;
+}
+
+.health-row{
+    padding:12px 0;
+
+    border-bottom:1px solid var(--border);
+}
+
+.health-label{
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    color:#899996;
+
+    letter-spacing:.5px;
+
+    margin-bottom:4px;
+}
+
+.health-value{
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(10,40,38,.48);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:100;
+
+    padding:20px;
+}
+
+.modal{
+    width:650px;
+
+    max-width:100%;
+
+    max-height:92vh;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:0 30px 80px rgba(0,0,0,.2);
+}
+
+.modal-header{
+    padding:20px 24px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.modal-header h2{
+    font-size:20px;
+}
+
+.close{
+    width:32px;
+    height:32px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#edf4f3;
+
+    color:#52706c;
+
+    font-size:19px;
+
+    cursor:pointer;
+}
+
+.modal-body{
+    padding:25px;
+}
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.save{
+    width:100%;
+
+    border:0;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    font-weight:800;
+
+    margin-top:10px;
+
+    cursor:pointer;
+}
+
+.save:hover{
+    background:var(--primary-dark);
+}
+
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+.calendar{
+    margin-top:22px;
+}
+
+.calendar-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.calendar-header h3{
+    font-size:16px;
+}
+
+.calendar-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(7,1fr);
+
+    gap:5px;
+}
+
+.calendar-day-name{
+    text-align:center;
+
+    font-size:10px;
+
+    color:var(--muted);
+
+    padding:6px;
+}
+
+.calendar-day{
+    min-height:60px;
+
+    border:1px solid #edf3f2;
+
+    border-radius:8px;
+
+    padding:7px;
+
+    font-size:11px;
+
+    position:relative;
+
+    background:#fff;
+}
+
+.calendar-day.today{
+    border:2px solid var(--primary);
+}
+
+.calendar-day.has-visit{
+    background:#eff9f7;
+}
+
+.calendar-number{
+    font-weight:700;
+}
+
+.visit-dot{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    position:absolute;
+
+    bottom:7px;
+    right:7px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1050px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .login-box{
+        grid-template-columns:1fr;
+    }
+
+    .login-brand{
+        display:none;
+    }
+
+    .login-form{
+        padding:40px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .content{
+        padding:15px;
+    }
+
+    .navbar{
+        padding:0 15px;
+    }
+
+    .user-pill{
+        display:none;
+    }
+
+    .page-heading{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .next-main{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .countdown{
+        text-align:left;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
+
+<section
+    class="login-page"
+    id="loginPage"
+>
+
+    <div class="login-box">
+
+        <div class="login-brand">
+
+            <div class="brand-icon">
+                ♡
+            </div>
+
+            <div class="brand-logo">
+                CARECIRCLE
+            </div>
+
+            <h1>
+                Care for the people
+                who matter most.
+            </h1>
+
+            <p>
+                Connect your family health information,
+                keep track of medical visits and never
+                miss an important appointment.
+            </p>
+
+        </div>
+
+
+        <div class="login-form">
+
+            <h2>
+                Welcome back
+            </h2>
+
+            <p class="login-description">
+                Enter your details to access your family circle.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="you@example.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                >
+
+            </div>
+
+
+            <button
+                class="login-button"
+                onclick="login()"
+            >
+                Enter CareCircle
+            </button>
+
+
+            <div class="demo">
+                Demo mode — any email and password will work
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section
+    class="dashboard"
+    id="dashboard"
+>
+
+
+<nav class="navbar">
+
+    <div class="nav-logo">
+        CARECIRCLE
+    </div>
+
+
+    <div class="nav-right">
+
+        <div
+            class="user-pill"
+            id="userEmail"
+        >
+            Family
+        </div>
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<main class="content">
+
+
+    <!-- PAGE HEADING -->
+
+    <div class="page-heading">
+
+        <div>
+
+            <h1>
+                Family Health Dashboard
+            </h1>
+
+            <p>
+                Stay connected. Stay prepared. Take care together.
+            </p>
+
+        </div>
+
+
+        <div
+            class="date-display"
+            id="todayDate"
+        >
+        </div>
+
+    </div>
+
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                👨‍👩‍👧
+            </div>
+
+            <div>
+
+                <h3 id="memberCount">
+                    0
+                </h3>
+
+                <p>
+                    Family Members
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📅
+            </div>
+
+            <div>
+
+                <h3 id="upcomingCount">
+                    0
+                </h3>
+
+                <p>
+                    Upcoming Visits
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <h3 id="overdueCount">
+                    0
+                </h3>
+
+                <p>
+                    Overdue Visits
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ❤️
+            </div>
+
+            <div>
+
+                <h3 id="healthCount">
+                    0
+                </h3>
+
+                <p>
+                    Health Profiles
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- OVERDUE ALERT -->
+
+    <div
+        class="alert"
+        id="overdueAlert"
+    >
+
+        <div>
+
+            <strong>
+                ⚠️ Medical visits need attention
+            </strong>
+
+            <span id="overdueMessage">
+                Some family appointments are overdue.
+            </span>
+
+        </div>
+
+        <button
+            onclick="showOverdue()"
+        >
+            View
+        </button>
+
+    </div>
+
+
+
+    <!-- MAIN DASHBOARD -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- LEFT -->
+
+        <div>
+
+
+            <!-- NEXT VISIT -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Next Medical Visit
+                    </h2>
+
+                    <span>
+                        Stay prepared
+                    </span>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div
+                        class="next-visit"
+                        id="nextVisitBox"
+                    >
+
+                        <div class="next-label">
+                            Upcoming care
+                        </div>
+
+
+                        <div class="next-main">
+
+                            <div class="next-person">
+
+                                <div
+                                    class="next-avatar"
+                                    id="nextAvatar"
+                                >
+                                    ?
+                                </div>
+
+                                <div>
+
+                                    <h3
+                                        id="nextPerson"
+                                    >
+                                        No upcoming visits
+                                    </h3>
+
+                                    <p
+                                        id="nextDetails"
+                                    >
+                                        Add a hospital visit to get started.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="countdown"
+                                id="countdown"
+                            >
+                                --
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- APPOINTMENTS -->
+
+                    <div>
+
+                        <div
+                            class="calendar-header"
+                        >
+
+                            <h3>
+                                Upcoming Visits
+                            </h3>
+
+                            <button
+                                class="member-actions"
+                                onclick="openVisitModal()"
+                            >
+                                + Add Visit
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="appointments"
+                            id="appointments"
+                        >
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CALENDAR -->
+
+                    <div class="calendar">
+
+                        <div class="calendar-header">
+
+                            <h3 id="calendarTitle">
+                                Calendar
+                            </h3>
+
+                        </div>
+
+                        <div
+                            class="calendar-grid"
+                            id="calendarGrid"
+                        >
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAMILY TREE -->
+
+            <div
+                class="card"
+                style="margin-top:22px;"
+            >
+
+                <div class="card-header">
+
+                    <h2>
+                        Family Tree
+                    </h2>
+
+                    <button
+                        class="save"
+                        style="
+                            width:auto;
+                            padding:9px 13px;
+                            margin:0;
+                        "
+                        onclick="openMemberModal(null)"
+                    >
+                        + Add Member
+                    </button>
+
+                </div>
+
+
+                <div class="tree-area">
+
+                    <div
+                        class="tree"
+                        id="familyTree"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RIGHT -->
+
+        <div>
+
+
+            <!-- HEALTH PROFILE -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Health Profile
+                    </h2>
+
+                    <span>
+                        Family information
+                    </span>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div
+                        id="emptyProfile"
+                        style="
+                            color:var(--muted);
+                            font-size:13px;
+                            line-height:1.7;
+                        "
+                    >
+
+                        Select a person from your family
+                        tree to view their health information.
+
+                    </div>
+
+
+                    <div
+                        class="profile"
+                        id="profile"
+                    >
+
+                        <div class="profile-top">
+
+                            <div
+                                class="profile-avatar"
+                                id="profileAvatar"
+                            >
+                                A
+                            </div>
+
+                            <h3
+                                id="profileName"
+                            >
+                                Member
+                            </h3>
+
+                            <p
+                                id="profileRelation"
+                            >
+                                Family Member
+                            </p>
+
+                        </div>
+
+
+                        <div class="health-row">
+
+                            <div class="health-label">
+                                Age
+                            </div>
+
+                            <div
+                                class="health-value"
+                                id="profileAge"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-row">
+
+                            <div class="health-label">
+                                Blood Group
+                            </div>
+
+                            <div
+                                class="health-value"
+                                id="profileBlood"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-row">
+
+                            <div class="health-label">
+                                Physical Issues
+                            </div>
+
+                            <div
+                                class="health-value"
+                                id="profileIssues"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-row">
+
+                            <div class="health-label">
+                                Allergies
+                            </div>
+
+                            <div
+                                class="health-value"
+                                id="profileAllergies"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-row">
+
+                            <div class="health-label">
+                                Medications
+                            </div>
+
+                            <div
+                                class="health-value"
+                                id="profileMedication"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <div class="health-row">
+
+                            <div class="health-label">
+                                Notes
+                            </div>
+
+                            <div
+                                class="health-value"
+                                id="profileNotes"
+                            >
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="save"
+                            onclick="editSelectedMember()"
+                        >
+                            Edit Health Information
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK INFO -->
+
+            <div
+                class="card"
+                style="margin-top:22px;"
+            >
+
+                <div class="card-header">
+
+                    <h2>
+                        CareCircle Tips
+                    </h2>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div style="
+                        display:flex;
+                        flex-direction:column;
+                        gap:14px;
+                    ">
+
+                        <div>
+
+                            <strong style="font-size:13px;">
+                                🩺 Keep records updated
+                            </strong>
+
+                            <p style="
+                                font-size:11px;
+                                color:var(--muted);
+                                margin-top:3px;
+                            ">
+                                Update medical information whenever
+                                there is an important change.
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong style="font-size:13px;">
+                                📅 Don't miss checkups
+                            </strong>
+
+                            <p style="
+                                font-size:11px;
+                                color:var(--muted);
+                                margin-top:3px;
+                            ">
+                                Add upcoming hospital and doctor
+                                visits to keep the family informed.
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong style="font-size:13px;">
+                                🔔 Watch overdue visits
+                            </strong>
+
+                            <p style="
+                                font-size:11px;
+                                color:var(--muted);
+                                margin-top:3px;
+                            ">
+                                Overdue appointments appear
+                                automatically on your dashboard.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</section>
+
+
+
+<!-- =====================================================
+     MEMBER MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="memberModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2 id="memberModalTitle">
+                Add Family Member
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeMemberModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <input
+                type="hidden"
+                id="editingMemberId"
+            >
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name *
+                    </label>
+
+                    <input
+                        id="memberName"
+                        placeholder="Enter name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Age
+                    </label>
+
+                    <input
+                        id="memberAge"
+                        type="number"
+                        placeholder="Age"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Relationship *
+                    </label>
+
+                    <select id="memberRelation">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option>Family Head</option>
+                        <option>Father</option>
+                        <option>Mother</option>
+                        <option>Son</option>
+                        <option>Daughter</option>
+                        <option>Brother</option>
+                        <option>Sister</option>
+                        <option>Grandfather</option>
+                        <option>Grandmother</option>
+                        <option>Uncle</option>
+                        <option>Aunt</option>
+                        <option>Cousin</option>
+                        <option>Spouse</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Blood Group
+                    </label>
+
+                    <select id="memberBlood">
+
+                        <option value="">
+                            Not specified
+                        </option>
+
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Physical Issues
+                    </label>
+
+                    <textarea
+                        id="memberIssues"
+                        placeholder="Example: Diabetes, asthma, hypertension..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Allergies
+                    </label>
+
+                    <textarea
+                        id="memberAllergies"
+                        placeholder="Known allergies..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Current Medications
+                    </label>
+
+                    <textarea
+                        id="memberMedication"
+                        placeholder="Current medicines..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Additional Notes
+                    </label>
+
+                    <textarea
+                        id="memberNotes"
+                        placeholder="Other important information..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="save"
+                onclick="saveMember()"
+            >
+                Save Family Member
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     VISIT MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="visitModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h2>
+                Schedule Medical Visit
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeVisitModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Family Member *
+                    </label>
+
+                    <select id="visitMember">
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Visit Type *
+                    </label>
+
+                    <select id="visitType">
+
+                        <option>
+                            Hospital Visit
+                        </option>
+
+                        <option>
+                            Doctor Appointment
+                        </option>
+
+                        <option>
+                            Routine Checkup
+                        </option>
+
+                        <option>
+                            Specialist Consultation
+                        </option>
+
+                        <option>
+                            Medical Test
+                        </option>
+
+                        <option>
+                            Follow-up
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Date *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="visitDate"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="visitTime"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Hospital / Clinic
+                    </label>
+
+                    <input
+                        id="visitHospital"
+                        placeholder="Hospital or clinic"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Doctor
+                    </label>
+
+                    <input
+                        id="visitDoctor"
+                        placeholder="Doctor name"
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Reason for Visit
+                    </label>
+
+                    <textarea
+                        id="visitReason"
+                        placeholder="Why is this visit needed?"
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Reminder
+                    </label>
+
+                    <select id="visitReminder">
+
+                        <option value="0">
+                            On the day
+                        </option>
+
+                        <option value="1">
+                            1 day before
+                        </option>
+
+                        <option value="3">
+                            3 days before
+                        </option>
+
+                        <option value="7">
+                            1 week before
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="save"
+                onclick="saveVisit()"
+            >
+                Schedule Visit
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let familyMembers =
+    JSON.parse(
+        localStorage.getItem("carecircle_members")
+    ) || [];
+
+let visits =
+    JSON.parse(
+        localStorage.getItem("carecircle_visits")
+    ) || [];
+
+let currentSelectedMember = null;
+
+let selectedParentId = null;
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login(){
+
+    const email =
+        document
+        .getElementById("loginEmail")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value
+        .trim();
+
+
+    if(!email || !password){
+
+        alert(
+            "Please enter email and password."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "carecircle_user",
+        email
+    );
+
+
+    document
+        .getElementById("loginPage")
+        .style.display="none";
+
+
+    document
+        .getElementById("dashboard")
+        .style.display="block";
+
+
+    document
+        .getElementById("userEmail")
+        .textContent=email;
+
+
+    initialize();
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+    document
+        .getElementById("dashboard")
+        .style.display="none";
+
+
+    document
+        .getElementById("loginPage")
+        .style.display="flex";
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+function initialize(){
+
+    if(
+        familyMembers.length === 0
+    ){
+
+        familyMembers.push({
+
+            id:Date.now(),
+
+            parentId:null,
+
+            name:"You",
+
+            age:"",
+
+            relation:"Family Head",
+
+            blood:"",
+
+            issues:"",
+
+            allergies:"",
+
+            medication:"",
+
+            notes:""
+
+        });
+
+        saveData();
+
+    }
+
+
+    updateDate();
+
+    renderTree();
+
+    updateStats();
+
+    renderAppointments();
+
+    renderCalendar();
+
+    updateNextVisit();
+
+}
+
+
+/* =====================================================
+   SAVE DATA
+===================================================== */
+
+function saveData(){
+
+    localStorage.setItem(
+        "carecircle_members",
+        JSON.stringify(familyMembers)
+    );
+
+    localStorage.setItem(
+        "carecircle_visits",
+        JSON.stringify(visits)
+    );
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function updateDate(){
+
+    const now = new Date();
+
+    document
+        .getElementById("todayDate")
+        .textContent =
+        now.toLocaleDateString(
+            "en-IN",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+}
+
+
+/* =====================================================
+   TREE
+===================================================== */
+
+function getChildren(parentId){
+
+    return familyMembers.filter(
+        m => m.parentId === parentId
+    );
+
+}
+
+
+function renderTree(){
+
+    const tree =
+        document.getElementById(
+            "familyTree"
+        );
+
+    tree.innerHTML="";
+
+
+    const roots =
+        getChildren(null);
+
+
+    roots.forEach(
+        root => {
+
+            tree.appendChild(
+                createTreeNode(root)
+            );
+
+        }
+    );
+
+}
+
+
+function createTreeNode(member){
+
+    const node =
+        document.createElement("div");
+
+    node.className="tree-node";
+
+
+    const card =
+        document.createElement("div");
+
+    card.className="member-card";
+
+
+    card.onclick =
+        () => showProfile(member.id);
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className="avatar";
+
+    avatar.textContent =
+        member.name
+        .charAt(0)
+        .toUpperCase();
+
+
+    const title =
+        document.createElement("h4");
+
+    title.textContent =
+        member.name;
+
+
+    const relation =
+        document.createElement("p");
+
+    relation.textContent =
+        member.relation;
+
+
+    const actions =
+        document.createElement("div");
+
+    actions.className="member-actions";
+
+
+    const healthButton =
+        document.createElement("button");
+
+    healthButton.textContent="Health";
+
+    healthButton.onclick =
+        event => {
+
+            event.stopPropagation();
+
+            showProfile(member.id);
+
+        };
+
+
+    const visitButton =
+        document.createElement("button");
+
+    visitButton.textContent="Visit";
+
+    visitButton.onclick =
+        event => {
+
+            event.stopPropagation();
+
+            openVisitModal(member.id);
+
+        };
+
+
+    actions.appendChild(
+        healthButton
+    );
+
+    actions.appendChild(
+        visitButton
+    );
+
+
+    card.appendChild(avatar);
+
+    card.appendChild(title);
+
+    card.appendChild(relation);
+
+    card.appendChild(actions);
+
+
+    const addButton =
+        document.createElement("button");
+
+    addButton.className="add-child";
+
+    addButton.textContent="+";
+
+    addButton.onclick =
+        event => {
+
+            event.stopPropagation();
+
+            openMemberModal(
+                member.id
+            );
+
+        };
+
+
+    card.appendChild(addButton);
+
+    node.appendChild(card);
+
+
+    const children =
+        getChildren(member.id);
+
+
+    if(children.length){
+
+        const childrenBox =
+            document.createElement("div");
+
+        childrenBox.className="children";
+
+
+        children.forEach(
+            child => {
+
+                childrenBox.appendChild(
+                    createTreeNode(child)
+                );
+
+            }
+        );
+
+
+        node.appendChild(
+            childrenBox
+        );
+
+    }
+
+
+    return node;
+
+}
+
+
+/* =====================================================
+   MEMBER MODAL
+===================================================== */
+
+function openMemberModal(parentId){
+
+    selectedParentId =
+        parentId;
+
+
+    document
+        .getElementById("editingMemberId")
+        .value="";
+
+
+    document
+        .getElementById("memberModalTitle")
+        .textContent=
+        "Add Family Member";
+
+
+    clearMemberForm();
+
+
+    document
+        .getElementById("memberModal")
+        .style.display="flex";
+
+}
+
+
+function closeMemberModal(){
+
+    document
+        .getElementById("memberModal")
+        .style.display="none";
+
+}
+
+
+function clearMemberForm(){
+
+    document
+        .getElementById("memberName")
+        .value="";
+
+    document
+        .getElementById("memberAge")
+        .value="";
+
+    document
+        .getElementById("memberRelation")
+        .value="";
+
+    document
+        .getElementById("memberBlood")
+        .value="";
+
+    document
+        .getElementById("memberIssues")
+        .value="";
+
+    document
+        .getElementById("memberAllergies")
+        .value="";
+
+    document
+        .getElementById("memberMedication")
+        .value="";
+
+    document
+        .getElementById("memberNotes")
+        .value="";
+
+}
+
+
+/* =====================================================
+   SAVE MEMBER
+===================================================== */
+
+function saveMember(){
+
+    const name =
+        document
+        .getElementById("memberName")
+        .value
+        .trim();
+
+    const relation =
+        document
+        .getElementById("memberRelation")
+        .value;
+
+
+    if(!name || !relation){
+
+        alert(
+            "Please enter name and relationship."
+        );
+
+        return;
+    }
+
+
+    const editingId =
+        document
+        .getElementById("editingMemberId")
+        .value;
+
+
+    if(editingId){
+
+        const member =
+            familyMembers.find(
+                m =>
+                m.id ==
+                editingId
+            );
+
+
+        if(member){
+
+            member.name=name;
+
+            member.age =
+                document
+                .getElementById("memberAge")
+                .value;
+
+            member.relation=relation;
+
+            member.blood =
+                document
+                .getElementById("memberBlood")
+                .value;
+
+            member.issues =
+                document
+                .getElementById("memberIssues")
+                .value;
+
+            member.allergies =
+                document
+                .getElementById("memberAllergies")
+                .value;
+
+            member.medication =
+                document
+                .getElementById("memberMedication")
+                .value;
+
+            member.notes =
+                document
+                .getElementById("memberNotes")
+                .value;
+
+        }
+
+    }else{
+
+        familyMembers.push({
+
+            id:Date.now(),
+
+            parentId:selectedParentId,
+
+            name:name,
+
+            age:
+                document
+                .getElementById("memberAge")
+                .value,
+
+            relation:relation,
+
+            blood:
+                document
+                .getElementById("memberBlood")
+                .value,
+
+            issues:
+                document
+                .getElementById("memberIssues")
+                .value,
+
+            allergies:
+                document
+                .getElementById("memberAllergies")
+                .value,
+
+            medication:
+                document
+                .getElementById("memberMedication")
+                .value,
+
+            notes:
+                document
+                .getElementById("memberNotes")
+                .value
+
+        });
+
+    }
+
+
+    saveData();
+
+    renderTree();
+
+    updateStats();
+
+
+    if(
+        currentSelectedMember
+    ){
+
+        showProfile(
+            currentSelectedMember
+        );
+
+    }
+
+
+    closeMemberModal();
+
+}
+
+
+/* =====================================================
+   EDIT MEMBER
+===================================================== */
+
+function editSelectedMember(){
+
+    if(!currentSelectedMember)
+        return;
+
+
+    const member =
+        familyMembers.find(
+            m =>
+            m.id ===
+            currentSelectedMember
+        );
+
+
+    if(!member)
+        return;
+
+
+    document
+        .getElementById("editingMemberId")
+        .value =
+        member.id;
+
+
+    document
+        .getElementById("memberModalTitle")
+        .textContent =
+        "Edit Health Information";
+
+
+    document
+        .getElementById("memberName")
+        .value =
+        member.name;
+
+
+    document
+        .getElementById("memberAge")
+        .value =
+        member.age;
+
+
+    document
+        .getElementById("memberRelation")
+        .value =
+        member.relation;
+
+
+    document
+        .getElementById("memberBlood")
+        .value =
+        member.blood;
+
+
+    document
+        .getElementById("memberIssues")
+        .value =
+        member.issues;
+
+
+    document
+        .getElementById("memberAllergies")
+        .value =
+        member.allergies;
+
+
+    document
+        .getElementById("memberMedication")
+        .value =
+        member.medication;
+
+
+    document
+        .getElementById("memberNotes")
+        .value =
+        member.notes;
+
+
+    document
+        .getElementById("memberModal")
+        .style.display="flex";
+
+}
+
+
+/* =====================================================
+   HEALTH PROFILE
+===================================================== */
+
+function showProfile(id){
+
+    const member =
+        familyMembers.find(
+            m =>
+            m.id === id
+        );
+
+
+    if(!member)
+        return;
+
+
+    currentSelectedMember=id;
+
+
+    document
+        .getElementById("emptyProfile")
+        .style.display="none";
+
+
+    document
+        .getElementById("profile")
+        .style.display="block";
+
+
+    document
+        .getElementById("profileAvatar")
+        .textContent =
+        member.name
+        .charAt(0)
+        .toUpperCase();
+
+
+    document
+        .getElementById("profileName")
+        .textContent =
+        member.name;
+
+
+    document
+        .getElementById("profileRelation")
+        .textContent =
+        member.relation;
+
+
+    document
+        .getElementById("profileAge")
+        .textContent =
+        member.age
+        ? member.age+" years"
+        : "Not specified";
+
+
+    document
+        .getElementById("profileBlood")
+        .textContent =
+        member.blood
+        ? member.blood
+        : "Not specified";
+
+
+    document
+        .getElementById("profileIssues")
+        .textContent =
+        member.issues
+        ? member.issues
+        : "No information provided";
+
+
+    document
+        .getElementById("profileAllergies")
+        .textContent =
+        member.allergies
+        ? member.allergies
+        : "No information provided";
+
+
+    document
+        .getElementById("profileMedication")
+        .textContent =
+        member.medication
+        ? member.medication
+        : "No information provided";
+
+
+    document
+        .getElementById("profileNotes")
+        .textContent =
+        member.notes
+        ? member.notes
+        : "No additional notes";
+
+}
+
+
+/* =====================================================
+   VISIT MODAL
+===================================================== */
+
+function openVisitModal(memberId=null){
+
+    const select =
+        document
+        .getElementById("visitMember");
+
+
+    select.innerHTML="";
+
+
+    familyMembers.forEach(
+        member => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                member.id;
+
+            option.textContent =
+                member.name+
+                " — "+
+                member.relation;
+
+
+            if(
+                memberId &&
+                member.id === memberId
+            ){
+
+                option.selected=true;
+
+            }
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    document
+        .getElementById("visitDate")
+        .value="";
+
+
+    document
+        .getElementById("visitTime")
+        .value="";
+
+
+    document
+        .getElementById("visitHospital")
+        .value="";
+
+
+    document
+        .getElementById("visitDoctor")
+        .value="";
+
+
+    document
+        .getElementById("visitReason")
+        .value="";
+
+
+    document
+        .getElementById("visitModal")
+        .style.display="flex";
+
+}
+
+
+function closeVisitModal(){
+
+    document
+        .getElementById("visitModal")
+        .style.display="none";
+
+}
+
+
+/* =====================================================
+   SAVE VISIT
+===================================================== */
+
+function saveVisit(){
+
+    const memberId =
+        Number(
+            document
+            .getElementById("visitMember")
+            .value
+        );
+
+
+    const date =
+        document
+        .getElementById("visitDate")
+        .value;
+
+
+    if(!memberId || !date){
+
+        alert(
+            "Please select a family member and date."
+        );
+
+        return;
+    }
+
+
+    const visit={
+
+        id:Date.now(),
+
+        memberId:memberId,
+
+        type:
+            document
+            .getElementById("visitType")
+            .value,
+
+        date:date,
+
+        time:
+            document
+            .getElementById("visitTime")
+            .value,
+
+        hospital:
+            document
+            .getElementById("visitHospital")
+            .value,
+
+        doctor:
+            document
+            .getElementById("visitDoctor")
+            .value,
+
+        reason:
+            document
+            .getElementById("visitReason")
+            .value,
+
+        reminder:
+            Number(
+                document
+                .getElementById("visitReminder")
+                .value
+            )
+
+    };
+
+
+    visits.push(visit);
+
+
+    saveData();
+
+    renderAppointments();
+
+    renderCalendar();
+
+    updateStats();
+
+    updateNextVisit();
+
+    closeVisitModal();
+
+}
+
+
+/* =====================================================
+   VISIT STATUS
+===================================================== */
+
+function getVisitStatus(visit){
+
+    const today =
+        startOfDay(
+            new Date()
+        );
+
+
+    const date =
+        startOfDay(
+            new Date(
+                visit.date+
+                "T00:00:00"
+            )
+        );
+
+
+    if(date < today)
+        return "overdue";
+
+
+    if(date.getTime() === today.getTime())
+        return "today";
+
+
+    return "upcoming";
+
+}
+
+
+function startOfDay(date){
+
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+    );
+
+}
+
+
+/* =====================================================
+   APPOINTMENTS
+===================================================== */
+
+function renderAppointments(){
+
+    const container =
+        document
+        .getElementById("appointments");
+
+
+    container.innerHTML="";
+
+
+    const sorted =
+        [...visits].sort(
+            (a,b) =>
+            new Date(
+                a.date+
+                "T"+
+                (a.time||"00:00")
+            )
+            -
+            new Date(
+                b.date+
+                "T"+
+                (b.time||"00:00")
+            )
+        );
+
+
+    if(sorted.length===0){
+
+        container.innerHTML=`
+
+            <div style="
+                color:var(--muted);
+                font-size:13px;
+                padding:10px 0;
+            ">
+
+                No medical visits scheduled yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    sorted
+        .slice(0,6)
+        .forEach(
+            visit => {
+
+                const member =
+                    familyMembers.find(
+                        m =>
+                        m.id ===
+                        visit.memberId
+                    );
+
+
+                if(!member)
+                    return;
+
+
+                const status =
+                    getVisitStatus(
+                        visit
+                    );
+
+
+                const date =
+                    new Date(
+                        visit.date+
+                        "T00:00:00"
+                    );
+
+
+                const appointment =
+                    document.createElement(
+                        "div"
+                    );
+
+                appointment.className=
+                    "appointment";
+
+
+                appointment.innerHTML=`
+
+                    <div class="appointment-date">
+
+                        <strong>
+                            ${date.getDate()}
+                        </strong>
+
+                        <small>
+                            ${date.toLocaleDateString(
+                                "en",
+                                {
+                                    month:"short"
+                                }
+                            ).toUpperCase()}
+                        </small>
+
+                    </div>
+
+
+                    <div class="appointment-info">
+
+                        <h4>
+                            ${escapeHTML(
+                                member.name
+                            )}
+                        </h4>
+
+                        <p>
+                            ${escapeHTML(
+                                visit.type
+                            )}
+                            ${visit.hospital
+                                ? " · "+
+                                  escapeHTML(
+                                      visit.hospital
+                                  )
+                                : ""}
+                        </p>
+
+                    </div>
+
+
+                    <div class="status ${status}">
+
+                        ${
+                            status === "overdue"
+                            ? "OVERDUE"
+                            :
+                            status === "today"
+                            ? "TODAY"
+                            :
+                            "UPCOMING"
+                        }
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(
+                    appointment
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   NEXT VISIT
+===================================================== */
+
+function updateNextVisit(){
+
+    const futureVisits =
+        visits
+        .filter(
+            v =>
+            getVisitStatus(v)
+            !== "overdue"
+        )
+        .sort(
+            (a,b) =>
+            new Date(
+                a.date+
+                "T"+
+                (a.time||"00:00")
+            )
+            -
+            new Date(
+                b.date+
+                "T"+
+                (b.time||"00:00")
+            )
+        );
+
+
+    if(
+        futureVisits.length===0
+    ){
+
+        document
+            .getElementById("nextPerson")
+            .textContent =
+            "No upcoming visits";
+
+
+        document
+            .getElementById("nextDetails")
+            .textContent =
+            "Add a hospital visit to get started.";
+
+
+        document
+            .getElementById("nextAvatar")
+            .textContent="?";
+
+
+        document
+            .getElementById("countdown")
+            .textContent="--";
+
+        return;
+
+    }
+
+
+    const visit =
+        futureVisits[0];
+
+
+    const member =
+        familyMembers.find(
+            m =>
+            m.id ===
+            visit.memberId
+        );
+
+
+    if(!member)
+        return;
+
+
+    document
+        .getElementById("nextAvatar")
+        .textContent =
+        member.name
+        .charAt(0)
+        .toUpperCase();
+
+
+    document
+        .getElementById("nextPerson")
+        .textContent =
+        member.name;
+
+
+    document
+        .getElementById("nextDetails")
+        .textContent =
+        visit.type+
+        (
+            visit.hospital
+            ? " · "+visit.hospital
+            : ""
+        );
+
+
+    updateCountdown(
+        visit
+    );
+
+}
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+function updateCountdown(visit){
+
+    const target =
+        new Date(
+            visit.date+
+            "T"+
+            (
+                visit.time
+                || "09:00"
+            )
+        );
+
+
+    const now =
+        new Date();
+
+
+    let difference =
+        target -
+        now;
+
+
+    const countdown =
+        document
+        .getElementById("countdown");
+
+
+    if(
+        difference <= 0
+    ){
+
+        countdown.innerHTML=`
+            TODAY
+            <small>Medical visit</small>
+        `;
+
+        return;
+
+    }
+
+
+    const days =
+        Math.floor(
+            difference /
+            (
+                1000*60*60*24
+            )
+        );
+
+
+    difference -=
+        days *
+        (
+            1000*60*60*24
+        );
+
+
+    const hours =
+        Math.floor(
+            difference /
+            (
+                1000*60*60
+            )
+        );
+
+
+    difference -=
+        hours *
+        (
+            1000*60*60
+        );
+
+
+    const minutes =
+        Math.floor(
+            difference /
+            (
+                1000*60
+            )
+        );
+
+
+    if(days>0){
+
+        countdown.innerHTML=`
+
+            ${days} day${days!==1?"s":""}
+
+            <small>
+                ${hours}h ${minutes}m remaining
+            </small>
+
+        `;
+
+    }else{
+
+        countdown.innerHTML=`
+
+            ${hours}h ${minutes}m
+
+            <small>
+                remaining
+            </small>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+function renderCalendar(){
+
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        now.getMonth();
+
+
+    document
+        .getElementById("calendarTitle")
+        .textContent =
+        now.toLocaleDateString(
+            "en",
+            {
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+
+    const grid =
+        document
+        .getElementById("calendarGrid");
+
+
+    grid.innerHTML="";
+
+
+    const days=[
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT"
+    ];
+
+
+    days.forEach(
+        day => {
+
+            const el =
+                document.createElement(
+                    "div"
+                );
+
+            el.className=
+                "calendar-day-name";
+
+            el.textContent=day;
+
+            grid.appendChild(el);
+
+        }
+    );
+
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    const totalDays =
+        new Date(
+            year,
+            month+1,
+            0
+        ).getDate();
+
+
+    for(
+        let i=0;
+        i<firstDay;
+        i++
+    ){
+
+        const blank =
+            document.createElement(
+                "div"
+            );
+
+        grid.appendChild(blank);
+
+    }
+
+
+    for(
+        let day=1;
+        day<=totalDays;
+        day++
+    ){
+
+        const cell =
+            document.createElement(
+                "div"
+            );
+
+        cell.className=
+            "calendar-day";
+
+
+        const dateString =
+            `${year}-${
+                String(month+1)
+                .padStart(2,"0")
+            }-${
+                String(day)
+                .padStart(2,"0")
+            }`;
+
+
+        const today =
+            new Date();
+
+
+        if(
+            day === today.getDate()
+            &&
+            month === today.getMonth()
+            &&
+            year === today.getFullYear()
+        ){
+
+            cell.classList.add(
+                "today"
+            );
+
+        }
+
+
+        const visitsToday =
+            visits.filter(
+                v =>
+                v.date ===
+                dateString
+            );
+
+
+        if(
+            visitsToday.length
+        ){
+
+            cell.classList.add(
+                "has-visit"
+            );
+
+        }
+
+
+        cell.innerHTML=`
+
+            <div class="calendar-number">
+                ${day}
+            </div>
+
+            ${
+                visitsToday.length
+                ?
+                `<div class="visit-dot"></div>`
+                :
+                ""
+            }
+
+        `;
+
+
+        grid.appendChild(cell);
+
+    }
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+    document
+        .getElementById("memberCount")
+        .textContent =
+        familyMembers.length;
+
+
+    const overdue =
+        visits.filter(
+            v =>
+            getVisitStatus(v)
+            === "overdue"
+        ).length;
+
+
+    const upcoming =
+        visits.filter(
+            v =>
+            getVisitStatus(v)
+            !== "overdue"
+        ).length;
+
+
+    const healthProfiles =
+        familyMembers.filter(
+            m =>
+            m.age ||
+            m.blood ||
+            m.issues ||
+            m.allergies ||
+            m.medication ||
+            m.notes
+        ).length;
+
+
+    document
+        .getElementById("upcomingCount")
+        .textContent =
+        upcoming;
+
+
+    document
+        .getElementById("overdueCount")
+        .textContent =
+        overdue;
+
+
+    document
+        .getElementById("healthCount")
+        .textContent =
+        healthProfiles;
+
+
+    const alert =
+        document
+        .getElementById("overdueAlert");
+
+
+    if(overdue>0){
+
+        alert.style.display="flex";
+
+
+        document
+            .getElementById("overdueMessage")
+            .textContent =
+            overdue+
+            (
+                overdue===1
+                ? " appointment is overdue."
+                : " appointments are overdue."
+            );
+
+    }else{
+
+        alert.style.display="none";
+
+    }
+
+}
+
+
+/* =====================================================
+   OVERDUE
+===================================================== */
+
+function showOverdue(){
+
+    const overdue =
+        visits.filter(
+            v =>
+            getVisitStatus(v)
+            === "overdue"
+        );
+
+
+    if(
+        overdue.length===0
+    ){
+
+        alert(
+            "There are no overdue visits."
+        );
+
+        return;
+
+    }
+
+
+    let message =
+        "Overdue visits:\n\n";
+
+
+    overdue.forEach(
+        visit => {
+
+            const member =
+                familyMembers.find(
+                    m =>
+                    m.id ===
+                    visit.memberId
+                );
+
+
+            if(member){
+
+                message +=
+                    "• "+
+                    member.name+
+                    " — "+
+                    visit.type+
+                    " — "+
+                    visit.date+
+                    "\n";
+
+            }
+
+        }
+    );
+
+
+    alert(message);
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    if(!value)
+        return "";
+
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   AUTO LOGIN
+===================================================== */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        const user =
+            localStorage.getItem(
+                "carecircle_user"
+            );
+
+
+        if(user){
+
+            document
+                .getElementById("loginPage")
+                .style.display="none";
+
+
+            document
+                .getElementById("dashboard")
+                .style.display="block";
+
+
+            document
+                .getElementById("userEmail")
+                .textContent=user;
+
+
+            initialize();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LIVE COUNTDOWN
+===================================================== */
+
+setInterval(
+    () => {
+
+        if(
+            document
+            .getElementById("dashboard")
+            .style.display ===
+            "block"
+        ){
+
+            updateNextVisit();
+
+        }
+
+    },
+    60000
+);
+
+</script>
+
+</body>
+</html>
